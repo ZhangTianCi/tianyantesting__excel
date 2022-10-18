@@ -1,19 +1,17 @@
 package com.aici.compatibility;
 
+import java.util.Map;
 import java.util.List;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map.Entry;
 import java.io.OutputStream;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.io.ByteArrayOutputStream;
 
 import javax.imageio.ImageIO;
 
-import com.aici.compatibility.dto.CompatibilityMachineDTO;
 import lombok.extern.slf4j.Slf4j;
-
-import com.aici.compatibility.dto.CompatibilityCommandStatisticItem;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -34,6 +32,9 @@ import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
+
+import com.aici.compatibility.dto.CompatibilityMachineDTO;
+import com.aici.compatibility.dto.CompatibilityCommandStatisticItem;
 
 /**
  * Excel生成
@@ -325,9 +326,11 @@ public class Excel {
         cellStyle.setBorderBottom(BorderStyle.THIN);
         cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
         cellStyle.setFont(font);
-        collect.forEach((k, v) -> {
+        int index = 0;
+        for (Entry<String, List<CompatibilityCommandStatisticItem>> entry : collect.entrySet()) {
+            List<CompatibilityCommandStatisticItem> v = entry.getValue();
             for (int i = 0; i < v.size(); i++) {
-                HSSFRow dataRow = sheet.createRow(1 + i);
+                HSSFRow dataRow = sheet.createRow(++index);
                 dataRow.setHeight((short)500);
                 CompatibilityMachineDTO machine = v.get(i).getMachine();
                 dataRow.createCell(0).setCellValue(machine.getOsType());
@@ -339,6 +342,6 @@ public class Excel {
                 dataRow.createCell(6).setCellValue(machine.getTerminalsModel());
                 for (int j = 0; j < 7; j++) {dataRow.getCell(j).setCellStyle(cellStyle);}
             }
-        });
+        }
     }
 }

@@ -6,11 +6,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.io.FileOutputStream;
 
-import com.aici.compatibility.dto.CompatibilityCommandStatisticDTO;
-import com.aici.compatibility.dto.CompatibilityMachineDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
+import com.aici.compatibility.dto.CompatibilityMachineDTO;
+import com.aici.compatibility.dto.CompatibilityCommandStatisticDTO;
 import com.aici.compatibility.dto.CompatibilityCommandStatisticItem;
 
 /**
